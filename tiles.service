@@ -2,17 +2,18 @@
 Description=TilesOfOpenSeaMap
 After=docker.service
 Requires=docker.service
+Wants=reverse-proxy.service
 
 [Service]
 Restart=always
 KillMode=control-group
 ExecStart=/usr/bin/docker run --name=tiles-web --detach=false --cpu-shares=512 \
-    --memory=128M --publish=127.0.0.1:8085:80 --rm=true \
+    --memory=128M --publish=127.0.0.1::80 --rm=true \
     --env=VIRTUAL_HOST=t1.*,tiles.* \
     --hostname=t1-web \
     --cap-drop=NET_RAW  -v /var/data/tiles:/data \
     openseamap/tiles-docker:master
-ExecStop=/usr/bin/docker pull openseamap/tiles-docker:master
+ExecReload=/usr/bin/docker pull openseamap/tiles-docker:master
 
 [Install]
 WantedBy=multi-user.target
