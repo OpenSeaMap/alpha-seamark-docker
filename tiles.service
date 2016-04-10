@@ -7,6 +7,7 @@ Wants=reverse-proxy.service
 [Service]
 Restart=always
 KillMode=control-group
+ExecStartPre=-/usr/bin/docker rm tiles-web
 ExecStart=/usr/bin/docker run --name=tiles-web --detach=false --cpu-shares=512 \
     --memory=128M --publish=127.0.0.1::80 --rm=true \
     --env=VIRTUAL_HOST=t1.*,tiles.* \
