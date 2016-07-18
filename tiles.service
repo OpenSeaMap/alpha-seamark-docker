@@ -11,6 +11,7 @@ ExecStartPre=-/usr/bin/docker rm tiles-web
 ExecStart=/usr/bin/docker run --name=tiles-web --detach=false --cpu-shares=512 \
     --memory=128M --publish=127.0.0.1::80 --rm=true \
     --env=VIRTUAL_HOST=t1.*,tiles.* \
+    --env=LETSENCRYPT_HOST=t1.openseamap.org,tiles.openseamap.org --env=LETSENCRYPT_EMAIL=project@openseamap.org \
     --hostname=t1-web \
     --cap-drop=NET_RAW  -v /var/data/tiles:/data \
     openseamap/tiles-docker:master
