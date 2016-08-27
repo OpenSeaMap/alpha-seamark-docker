@@ -14,8 +14,8 @@ ExecStart=/usr/bin/docker run --name=vectortiles-web --detach=false --cpu-shares
     --env=LETSENCRYPT_HOST=vectortiles.195.37.132.70.xip.io --env=LETSENCRYPT_EMAIL=project@openseamap.org \
     --hostname=vectortiles-web \
     --cap-drop=NET_RAW  -v /var/data/vectortiles:/data \
-    klokantech/tileserver-gl
-ExecReload=/usr/bin/docker pull klokantech/tileserver-gl
+    aaxee/tileserver-gl
+ExecReload=/usr/bin/docker pull aaxee/tileserver-gl
 
 [Install]
 WantedBy=multi-user.target
