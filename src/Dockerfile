@@ -1,5 +1,6 @@
 FROM phusion/baseimage:0.9.19
-MAINTAINER Axel Utech <axel@brasshack.de>
+
+LABEL org.opencontainers.image.authors="axel@brasshack.de"
 
 ENV LANG en_US.UTF-8
 ENV DEBIAN_FRONTEND noninteractive
@@ -8,7 +9,7 @@ CMD ["/sbin/my_init"]
 
 RUN \
     echo "Acquire::Languages \"none\";\nAPT::Install-Recommends \"true\";\nAPT::Install-Suggests \"false\";" > /etc/apt/apt.conf ;\
-    echo "Europe/Berlin" > /etc/timezone && dpkg-reconfigure tzdata ;\
+    echo "Europe/Berlin"  > /etc/timezone && dpkg-reconfigure tzdata ;\
     locale-gen en_US.UTF-8 en_DK.UTF-8 de_DE.UTF-8 ;\
     apt-get -q -y update ;\
     apt-get install -y aria2 nginx-light \

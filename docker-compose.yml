@@ -1,0 +1,29 @@
+version: '3.5'
+
+services:
+  seamark:
+    image: seamark # todo: put into registry
+    build: ./src
+    hostname: seamark 
+    restart: unless-stopped
+    networks:
+      - proxy
+    volumes:
+      - /var/data/tiles:/data
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.seamark.entrypoints=http" 
+      - "traefik.http.routers.seamark.rule=Host(`t1.openseamap.org`,`tiles.openseamap.org`)"
+      - "traefik.http.middlewares.seamark-https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.seamark.middlewares=seamark-https-redirect"
+      - "traefik.http.routers.seamark-secure.entrypoints=https"
+      - "traefik.http.routers.seamark-secure.rule=Host(`t1.openseamap.org`,`tiles.openseamap.org`)"
+      - "traefik.http.routers.seamark-secure.tls=true"
+      - "traefik.http.routers.seamark-secure.tls.certresolver=http"
+      - "traefik.http.routers.seamark-secure.service=seamark"
+      - "traefik.http.services.seamark.loadbalancer.server.port=80" 
+      - "traefik.docker.network=proxy"
+
+networks:
+  proxy:
+    external: true
