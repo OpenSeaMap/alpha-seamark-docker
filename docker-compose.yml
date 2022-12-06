@@ -2,7 +2,7 @@ version: '3.5'
 
 services:
   seamark:
-    image: seamark # todo: put into registry
+    image: ghcr.io/openseamap/seamark:v1.0
     build: ./src
     hostname: seamark 
     restart: unless-stopped
